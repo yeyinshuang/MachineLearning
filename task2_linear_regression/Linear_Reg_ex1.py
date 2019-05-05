@@ -57,10 +57,10 @@ model_poly.fit(poly_features_3.fit_transform(data['x'].values.reshape(-1,1)), da
 plot_x_poly = np.linspace(0, 8, 1000).reshape(-1, 1)
 plot_y_poly = model_poly.predict(poly_features_3.fit_transform(plot_x_poly))
 
-plt.scatter(data['x'], data['hx'])
-plt.plot(plot_x_poly, plot_y_poly, 'r-')
-plt.xlabel("x")
-plt.ylabel("hx")
+# plt.scatter(data['x'], data['hx'])
+# plt.plot(plot_x_poly, plot_y_poly, 'r-')
+# plt.xlabel("x")
+# plt.ylabel("hx")
 
 model_linear = LinearRegression()
 model_linear.fit(data['x'].values.reshape(-1,1), data['hx'].values.reshape(-1,1))
