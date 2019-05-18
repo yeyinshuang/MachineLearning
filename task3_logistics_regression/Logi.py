@@ -57,6 +57,11 @@ model.fit(feature_train,label_train)
 prediction = model.predict(feature_test)
 print(prediction)
 
+print(model.coef_)
+print(model.intercept_)
+
+
+
 
 from sklearn.metrics import f1_score
 current_f1 = f1_score(prediction,label_test,average='macro')
@@ -66,6 +71,11 @@ plt.scatter(feature_test['length'][np.bitwise_and(label_test == prediction,label
             feature_test['width'][np.bitwise_and(label_test== prediction,label_test=='car')],color='g')
 plt.scatter(feature_test['length'][np.bitwise_and(label_test == prediction,label_test=='truck')],
             feature_test['width'][np.bitwise_and(label_test== prediction,label_test=='truck')],color='r')
+
+plot_x_line = np.linspace(0,11,1000).reshape(-1,1)
+plot_y_line = model.predict(plot_x_line)
+
+plt.plot(plot_x_line,plot_y_line)
 
 # plt.plot(la)
 #决策边界没实现
