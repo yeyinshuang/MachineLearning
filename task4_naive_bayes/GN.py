@@ -14,8 +14,27 @@ data = pd.read_csv('vehicle.csv')
 #以下返回值均为两个类别的对应，也就是说返回值应该为一个包含两个值的向量
 #以下定义是按照计算层级定义的，你也可以自己定义自己的函数，直接顶一个包含很多函数的类去计算
 
+feature_car = data[data['label']=='car'].iloc[:, [0, 1]].values
+feature_truck = data[data['label']=='truck'].iloc[:, [0, 1]].values
+# print(feature_car)
+
 labels = data['label']
-data = data.drop('label',axis=1)
+feature = data.drop('label',axis=1)
+
+
+feature_mean = np.mean(feature, axis=0)
+feature_mean_car = np.mean(feature_car, axis=0)
+feature_mean_truck = np.mean(feature_truck, axis=0)
+
+feature_std = np.std(feature, ddof=1, axis=0)
+feature_car_std = np.std(feature_car, ddof=1, axis=0)
+feature_truck_std = np.std(feature_truck, ddof=1, axis=0)
+
+
+
+
+
+# print(feature)
 
 from sklearn.model_selection import train_test_split
 feature_train,featrre_test,label_train,label_test = train_test_split(data,labels,test_size=0.2,random_state=1)
@@ -46,6 +65,20 @@ def gaussian_probability(data_in):
 	gaussian_prob = (1/np.sqrt(2*np.pi)*std) * np.exp(-((data_in-mean)**2 / 2*(std**2)))
 
 	return gaussian_prob
+
+
+def gaussian_probability1(x):   # 变量x为包含长、宽两个特征值的向量
+	gaussian_pro1=(1/(np.sqrt(np.pi*2)*get_std(x)))
+	gaussian_pro2=np.exp((-np.square(x-get_mean(x))/2*np.square(get_std(x))))
+	gaussian_pro=gaussian_pro1*gaussian_pro2
+	return gaussian_pro
+x=np.array([5,2])
+y=gaussian_probability(x)
+y1 = gaussian_probability1(x);
+print(y)
+print(y1)
+
+
 #
 # 用高斯概率，先验概率，贝叶斯公式计算输入特征的类别概率
 # def class_probability(data_in):
@@ -63,14 +96,7 @@ def gaussian_probability(data_in):
 #
 # print(gaussian_probability(data))
 
-def gaussian_probability(x):   # 变量x为包含长、宽两个特征值的向量
-	gaussian_pro1=(1/(np.sqrt(np.pi*2)*get_std(x)))
-	gaussian_pro2=np.exp((-np.square(x-get_mean(x))/2*np.square(get_std(x))))
-	gaussian_pro=gaussian_pro1*gaussian_pro2
-	return gaussian_pro
-x=np.array([5,2])
-y=gaussian_probability(x)
-print(y)
+
 
 
 
